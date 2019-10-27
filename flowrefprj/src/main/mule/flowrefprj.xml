@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1a1878ca-6204-4de7-8cb5-0c059fccbb6d" basePath="/generate" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="45946cba-21f9-4d16-958e-4a8725c85159" >
+		<db:data-source-connection />
+	</db:config>
+	<flow name="flowrefprjFlow1" doc:id="9b7a8806-b7bb-442c-8719-a729fb0383d3" >
+		<http:listener doc:name="Listener" doc:id="d6dda9a6-0531-4447-9bdc-094bd8f2676a" config-ref="HTTP_Listener_config" path="generator"/>
+		<ee:transform doc:name="Transform Message" doc:id="1336518f-4d6d-4df1-a0f2-0a011c354d41" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.empmap((val,ind)->
+{
+	    ineno:val.empno,
+		inename:val.empname,
+		inecity:val.empcity,
+		inesal:val.empsal
+ }
+)		
+	
+
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:bulk-insert doc:name="Bulk insert" doc:id="03ffd052-07cf-4a98-b9eb-6ec7da2fb29d" config-ref="Database_Config"/>
+	</flow>
+	<flow name="flowrefprjFlow2" doc:id="e4d3c9ef-e10a-46fc-9003-f6cc9a3df4cb" >
+		<ee:transform doc:name="Transform Message" doc:id="a937c789-f689-4da1-85ea-dcc74dc470e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+if (payload.orders.id=='o111')
+{
+	orderdate:"12/09/2018",
+	ordercity:"chicago"
+	
+}
+else if(payload.orders.id=='0233'
+{
+orderdate:"12/26/2018",
+ordercity:"Gainsville"
+}
+else
+{
+OrderError:"Not valid id"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="flowrefprjFlow" doc:id="c39affc0-83af-48e4-b301-66d5fb1e9252" >
+	</flow>
+</mule>
