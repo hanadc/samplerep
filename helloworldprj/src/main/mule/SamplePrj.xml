@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="SamplePrjFlow" doc:id="bc42a9c6-7773-4b67-9d61-c1f617aa0b50" >
+		<http:listener doc:name="Listener" doc:id="993bd9df-a6fd-4bf4-b803-2be097b17ee8" config-ref="HTTP_Listener_config" path="/helloworld1" responseStreamingMode="NEVER"/>
+		<logger level="INFO" doc:name="Logger" doc:id="fb6a0de9-36c9-47fe-8915-96ef1a341f62" message="this is really funny project"/>
+		<logger level="INFO" doc:name="Logger" doc:id="dde32dff-a430-4cd4-a8ce-e99b28e6c639" message='"this is the third helloworld project"' category="marketing"/>
+	</flow>
+</mule>

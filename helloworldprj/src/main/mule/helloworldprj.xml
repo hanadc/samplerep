@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="5103765d-5429-4c0e-8209-7b57ea8827e0" basePath="/sampleprj" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="helloworldprjFlow" doc:id="2726130d-511a-4319-a77d-51d79d387d17" >
+		<http:listener doc:name="Listener" doc:id="1efc5654-7fae-4da3-ad38-ad0911c1d657" path="/helloworld" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7f7b38ed-3dc8-49c0-bcdb-3608ce389c39" message="this is the first helloworld project"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7f15740c-a860-4316-9253-99bc8a38204d" message="this is the first helloworld project"/>
+	</flow>
+</mule>
